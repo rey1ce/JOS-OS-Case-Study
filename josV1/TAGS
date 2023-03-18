@@ -1,0 +1,987 @@
+
+boot/boot.S,232
+.set 8,250
+.set 9,314
+.set 10,378
+.globl 12,441
+start:start13,454
+seta20.1:seta20.128,1104
+seta20.2:seta20.236,1282
+protcseg:protcseg58,1980
+spin:spin72,2494
+.p2align 76,2528
+gdt:gdt77,2595
+gdtdesc:gdtdesc82,2722
+
+boot/main.c,122
+#define SECTSIZE	32,1131
+#define ELFHDR	33,1152
+bootmain(39,1293
+readseg(72,2092
+waitdisk(99,2821
+readsect(107,2928
+
+fs/test.c,42
+static char *msg msg6,63
+fs_test(9,131
+
+inc/assert.h,145
+#define JOS_INC_ASSERT_H4,73
+void _panic(9,171
+#define warn(11,247
+#define panic(12,304
+#define assert(14,364
+#define static_assert(18,521
+
+inc/elf.h,1289
+#define JOS_INC_ELF_H2,22
+#define ELF_MAGIC 4,45
+struct Elf 6,109
+	uint32_t e_magic;7,122
+	uint8_t e_elf[e_elf8,165
+	uint16_t e_type;9,185
+	uint16_t e_machine;10,203
+	uint32_t e_version;11,224
+	uint32_t e_entry;12,245
+	uint32_t e_phoff;13,264
+	uint32_t e_shoff;14,283
+	uint32_t e_flags;15,302
+	uint16_t e_ehsize;16,321
+	uint16_t e_phentsize;17,341
+	uint16_t e_phnum;18,364
+	uint16_t e_shentsize;19,383
+	uint16_t e_shnum;20,406
+	uint16_t e_shstrndx;21,425
+struct Proghdr 24,451
+	uint32_t p_type;25,468
+	uint32_t p_offset;26,486
+	uint32_t p_va;27,506
+	uint32_t p_pa;28,522
+	uint32_t p_filesz;29,538
+	uint32_t p_memsz;30,558
+	uint32_t p_flags;31,577
+	uint32_t p_align;32,596
+struct Secthdr 35,619
+	uint32_t sh_name;36,636
+	uint32_t sh_type;37,655
+	uint32_t sh_flags;38,674
+	uint32_t sh_addr;39,694
+	uint32_t sh_offset;40,713
+	uint32_t sh_size;41,734
+	uint32_t sh_link;42,753
+	uint32_t sh_info;43,772
+	uint32_t sh_addralign;44,791
+	uint32_t sh_entsize;45,815
+#define ELF_PROG_LOAD	49,871
+#define ELF_PROG_FLAG_EXEC	52,931
+#define ELF_PROG_FLAG_WRITE	53,960
+#define ELF_PROG_FLAG_READ	54,990
+#define ELF_SHT_NULL	57,1051
+#define ELF_SHT_PROGBITS	58,1075
+#define ELF_SHT_SYMTAB	59,1102
+#define ELF_SHT_STRTAB	60,1128
+#define ELF_SHN_UNDEF	63,1186
+
+inc/env.h,561
+#define JOS_INC_ENV_H4,70
+typedef int32_t envid_t;10,166
+#define LOG2NENV	28,953
+#define NENV	29,974
+#define ENVX(30,1005
+	ENV_FREE 34,1095
+	ENV_DYING,35,1110
+	ENV_RUNNABLE,36,1122
+	ENV_RUNNING,37,1137
+	ENV_NOT_RUNNABLE38,1151
+enum EnvType 42,1202
+	ENV_TYPE_USER 43,1217
+struct Env 46,1241
+	struct Trapframe env_tf;47,1254
+	struct Env *env_link;env_link48,1299
+	envid_t env_id;49,1340
+	envid_t env_parent_id;50,1392
+	enum EnvType env_type;51,1448
+	unsigned env_status;52,1514
+	uint32_t env_runs;53,1566
+	pde_t *env_pgdir;env_pgdir56,1645
+
+inc/error.h,161
+#define JOS_INC_ERROR_H4,72
+	E_UNSPECIFIED	8,172
+	E_BAD_ENV	9,226
+	E_INVAL	11,323
+	E_NO_MEM	12,356
+	E_NO_FREE_ENV	13,409
+	E_FAULT	15,499
+	MAXERROR17,528
+
+inc/kbdreg.h,1811
+#define JOS_KBDREG_H2,21
+#define KEY_HOME	5,63
+#define KEY_END	6,85
+#define KEY_UP	7,107
+#define KEY_DN	8,128
+#define KEY_LF	9,149
+#define KEY_RT	10,170
+#define KEY_PGUP	11,191
+#define KEY_PGDN	12,213
+#define KEY_INS	13,235
+#define KEY_DEL	14,257
+#define	KBSTATP	19,331
+#define	 KBS_DIB	20,389
+#define	 KBS_IBF	21,436
+#define	 KBS_WARM	22,485
+#define	 KBS_OCMD	23,535
+#define	 KBS_NOSEC	24,594
+#define	 KBS_TERR	25,654
+#define	 KBS_RERR	26,720
+#define	 KBS_PERR	27,767
+#define	KBCMDP	29,814
+#define	 KBC_RAMREAD	30,864
+#define	 KBC_RAMWRITE	31,910
+#define	 KBC_AUXDISABLE	32,956
+#define	 KBC_AUXENABLE	33,1014
+#define	 KBC_AUXTEST	34,1070
+#define	 KBC_KBDECHO	35,1122
+#define	 KBC_AUXECHO	36,1176
+#define	 KBC_AUXWRITE	37,1231
+#define	 KBC_SELFTEST	38,1288
+#define	 KBC_KBDTEST	39,1337
+#define	 KBC_KBDDISABLE	40,1388
+#define	 KBC_KBDENABLE	41,1445
+#define	 KBC_PULSE0	42,1500
+#define	 KBC_PULSE1	43,1550
+#define	 KBC_PULSE2	44,1600
+#define	 KBC_PULSE3	45,1650
+#define	KBDATAP	47,1701
+#define	KBOUTP	48,1746
+#define	K_RDCMDBYTE	50,1791
+#define	K_LDCMDBYTE	51,1816
+#define	KC8_TRANS	53,1842
+#define	KC8_MDISABLE	54,1897
+#define	KC8_KDISABLE	55,1943
+#define	KC8_IGNSEC	56,1992
+#define	KC8_CPU	57,2043
+#define	KC8_MENABLE	58,2102
+#define	KC8_KENABLE	59,2156
+#define	CMDBYTE	60,2213
+#define	KBC_RESET	63,2299
+#define	KBC_RESEND	64,2347
+#define	KBC_SETDEFAULT	65,2419
+#define	KBC_DISABLE	66,2494
+#define	KBC_ENABLE	67,2578
+#define	KBC_TYPEMATIC	68,2628
+#define	KBC_SETTABLE	69,2690
+#define	KBC_MODEIND	70,2753
+#define	KBC_ECHO	71,2815
+#define	KBR_EXTENDED	74,2903
+#define	KBR_RESEND	75,2957
+#define	KBR_ACK	76,3011
+#define	KBR_OVERRUN	77,3064
+#define	KBR_FAILURE	78,3103
+#define	KBR_BREAK	79,3152
+#define	KBR_RSTDONE	80,3221
+#define	KBR_ECHO	81,3267
+
+inc/lib.h,252
+#define JOS_INC_LIB_H 8,296
+#define USED(20,536
+#define	O_RDONLY	49,1082
+#define	O_WRONLY	50,1135
+#define	O_RDWR	51,1188
+#define	O_ACCMODE	52,1247
+#define	O_CREAT	54,1301
+#define	O_TRUNC	55,1354
+#define	O_EXCL	56,1409
+#define O_MKDIR	57,1463
+
+inc/memlayout.h,796
+#define JOS_INC_MEMLAYOUT_H2,28
+#define GD_KT 15,324
+#define GD_KD 16,366
+#define GD_UT 17,408
+#define GD_UD 18,448
+#define GD_TSS0 19,488
+#define	KERNBASE	87,4609
+#define IOPHYSMEM	92,4814
+#define EXTPHYSMEM	93,4841
+#define KSTACKTOP	96,4887
+#define KSTKSIZE	97,4914
+#define KSTKGAP	98,4972
+#define MMIOLIM	101,5058
+#define MMIOBASE	102,5096
+#define ULIM	104,5133
+#define UVPT	112,5361
+#define UPAGES	114,5434
+#define UENVS	116,5515
+#define UTOP	123,5650
+#define UXSTACKTOP	125,5710
+#define USTACKTOP	128,5837
+#define UTEXT	131,5913
+#define UTEMP	134,6008
+#define PFTEMP	137,6168
+#define USTABDATA	139,6265
+typedef uint32_t pte_t;143,6320
+typedef uint32_t pde_t;144,6344
+struct PageInfo 175,7643
+	struct PageInfo *pp_link;pp_link177,7693
+	uint16_t pp_ref;184,7951
+
+inc/mmu.h,4204
+#define JOS_INC_MMU_H2,22
+#define PGNUM(30,964
+#define PDX(33,1040
+#define PTX(36,1121
+#define PGOFF(39,1200
+#define PGADDR(42,1300
+#define NPDENTRIES	45,1421
+#define NPTENTRIES	46,1491
+#define PGSIZE	48,1554
+#define PGSHIFT	49,1602
+#define PTSIZE	51,1640
+#define PTSHIFT	52,1718
+#define PTXSHIFT	54,1756
+#define PDXSHIFT	55,1814
+#define PTE_P	58,1910
+#define PTE_W	59,1942
+#define PTE_U	60,1976
+#define PTE_PWT	61,2005
+#define PTE_PCD	62,2045
+#define PTE_A	63,2085
+#define PTE_D	64,2118
+#define PTE_PS	65,2148
+#define PTE_G	66,2183
+#define PTE_AVAIL	70,2353
+#define PTE_SYSCALL	73,2480
+#define PTE_ADDR(76,2586
+#define CR0_PE	79,2665
+#define CR0_MP	80,2713
+#define CR0_EM	81,2763
+#define CR0_TS	82,2803
+#define CR0_ET	83,2847
+#define CR0_NE	84,2892
+#define CR0_WP	85,2937
+#define CR0_AM	86,2981
+#define CR0_NW	87,3026
+#define CR0_CD	88,3073
+#define CR0_PG	89,3117
+#define CR4_PCE	91,3155
+#define CR4_MCE	92,3213
+#define CR4_PSE	93,3265
+#define CR4_DE	94,3317
+#define CR4_TSD	95,3368
+#define CR4_PVI	96,3418
+#define CR4_VME	97,3483
+#define FL_CF	100,3554
+#define FL_PF	101,3594
+#define FL_AF	102,3635
+#define FL_ZF	103,3685
+#define FL_SF	104,3724
+#define FL_TF	105,3763
+#define FL_IF	106,3802
+#define FL_DF	107,3846
+#define FL_OF	108,3890
+#define FL_IOPL_MASK	109,3933
+#define FL_IOPL_0	110,3996
+#define FL_IOPL_1	111,4040
+#define FL_IOPL_2	112,4084
+#define FL_IOPL_3	113,4128
+#define FL_NT	114,4172
+#define FL_RF	115,4213
+#define FL_VM	116,4254
+#define FL_AC	117,4301
+#define FL_VIF	118,4346
+#define FL_VIP	119,4399
+#define FL_ID	120,4455
+#define FEC_PR	123,4519
+#define FEC_WR	124,4584
+#define FEC_U	125,4636
+#define SEG_NULL	139,4841
+#define SEG(142,4903
+struct Segdesc 152,5176
+	unsigned sd_lim_15_0 153,5193
+	unsigned sd_base_15_0 154,5251
+	unsigned sd_base_23_16 155,5316
+	unsigned sd_type 156,5384
+	unsigned sd_s 157,5450
+	unsigned sd_dpl 158,5510
+	unsigned sd_p 159,5569
+	unsigned sd_lim_19_16 160,5609
+	unsigned sd_avl 161,5668
+	unsigned sd_rsv1 162,5736
+	unsigned sd_db 163,5777
+	unsigned sd_g 164,5848
+	unsigned sd_base_31_24 165,5921
+#define SEG_NULL	168,6006
+#define SEG_FAULT	170,6114
+#define SEG(172,6192
+#define SEG16(176,6391
+#define STA_X	184,6662
+#define STA_E	185,6707
+#define STA_C	186,6771
+#define STA_W	187,6839
+#define STA_R	188,6901
+#define STA_A	189,6958
+#define STS_T16A	192,7022
+#define STS_LDT	193,7071
+#define STS_T16B	194,7122
+#define STS_CG16	195,7166
+#define STS_TG	196,7211
+#define STS_IG16	197,7268
+#define STS_TG16	198,7318
+#define STS_T32A	199,7363
+#define STS_T32B	200,7412
+#define STS_CG32	201,7456
+#define STS_IG32	202,7501
+#define STS_TG32	203,7551
+struct Taskstate 215,7731
+	uint32_t ts_link;216,7750
+	uintptr_t ts_esp0;217,7788
+	uint16_t ts_ss0;218,7848
+	uint16_t ts_padding1;219,7908
+	uintptr_t ts_esp1;220,7931
+	uint16_t ts_ss1;221,7951
+	uint16_t ts_padding2;222,7969
+	uintptr_t ts_esp2;223,7992
+	uint16_t ts_ss2;224,8012
+	uint16_t ts_padding3;225,8030
+	physaddr_t ts_cr3;226,8053
+	uintptr_t ts_eip;227,8096
+	uint32_t ts_eflags;228,8152
+	uint32_t ts_eax;229,8173
+	uint32_t ts_ecx;230,8223
+	uint32_t ts_edx;231,8241
+	uint32_t ts_ebx;232,8259
+	uintptr_t ts_esp;233,8277
+	uintptr_t ts_ebp;234,8296
+	uint32_t ts_esi;235,8315
+	uint32_t ts_edi;236,8333
+	uint16_t ts_es;237,8351
+	uint16_t ts_padding4;238,8414
+	uint16_t ts_cs;239,8437
+	uint16_t ts_padding5;240,8454
+	uint16_t ts_ss;241,8477
+	uint16_t ts_padding6;242,8494
+	uint16_t ts_ds;243,8517
+	uint16_t ts_padding7;244,8534
+	uint16_t ts_fs;245,8557
+	uint16_t ts_padding8;246,8574
+	uint16_t ts_gs;247,8597
+	uint16_t ts_padding9;248,8614
+	uint16_t ts_ldt;249,8637
+	uint16_t ts_padding10;250,8655
+	uint16_t ts_t;251,8679
+	uint16_t ts_iomb;252,8719
+struct Gatedesc 256,8811
+	unsigned gd_off_15_0 257,8829
+	unsigned gd_sel 258,8895
+	unsigned gd_args 259,8945
+	unsigned gd_rsv1 260,9013
+	unsigned gd_type 261,9079
+	unsigned gd_s 262,9137
+	unsigned gd_dpl 263,9189
+	unsigned gd_p 264,9262
+	unsigned gd_off_31_16 265,9303
+#define SETGATE(282,10286
+#define SETCALLGATE(296,10699
+struct Pseudodesc 310,11137
+	uint16_t pd_lim;311,11157
+	uint32_t pd_base;312,11185
+
+inc/stab.h,797
+#define JOS_STAB_H2,19
+#define	N_GSYM	15,436
+#define	N_FNAME	16,474
+#define	N_FUN	17,517
+#define	N_STSYM	18,555
+#define	N_LCSYM	19,602
+#define	N_MAIN	20,648
+#define	N_PC	21,691
+#define	N_RSYM	22,734
+#define	N_SLINE	23,776
+#define	N_DSLINE	24,826
+#define	N_BSLINE	25,876
+#define	N_SSYM	26,925
+#define	N_SO	27,973
+#define	N_LSYM	28,1017
+#define	N_BINCL	29,1056
+#define	N_SOL	30,1104
+#define	N_PSYM	31,1153
+#define	N_EINCL	32,1196
+#define	N_ENTRY	33,1238
+#define	N_LBRAC	34,1285
+#define	N_EXCL	35,1323
+#define	N_RBRAC	36,1368
+#define	N_BCOMM	37,1407
+#define	N_ECOMM	38,1445
+#define	N_ECOML	39,1481
+#define	N_LENG	40,1530
+struct Stab 43,1637
+	uint32_t n_strx;44,1651
+	uint8_t n_type;45,1704
+	uint8_t n_other;46,1747
+	uint16_t n_desc;47,1801
+	uintptr_t n_value;48,1847
+
+inc/stdarg.h,141
+#define	JOS_INC_STDARG_H4,91
+typedef __builtin_va_list va_list;6,117
+#define va_start(8,153
+#define va_arg(10,210
+#define va_end(12,263
+
+inc/stdio.h,226
+#define JOS_INC_STDIO_H2,24
+#define NULL	7,87
+enum pcolor 22,527
+	INVALID=23,541
+	WHITE=24,554
+	BLUE=25,566
+	GREEN=26,577
+	RED=27,589
+#define KNRM 30,603
+#define KRED 31,627
+#define KGRN 32,652
+#define KBLU 33,677
+
+inc/string.h,30
+#define JOS_INC_STRING_H2,25
+
+inc/syscall.h,161
+#define JOS_INC_SYSCALL_H2,26
+	SYS_cputs 6,86
+	SYS_cgetc,7,102
+	SYS_getenvid,8,114
+	SYS_env_destroy,9,129
+	SYS_np,10,147
+	SYS_lp,11,156
+	NSYSCALLS12,165
+
+inc/trap.h,1363
+#define JOS_INC_TRAP_H2,23
+#define T_DIVIDE 6,95
+#define T_DEBUG 7,135
+#define T_NMI 8,178
+#define T_BRKPT 9,228
+#define T_OFLOW 10,266
+#define T_BOUND 11,302
+#define T_ILLOP 12,342
+#define T_DEVICE 13,384
+#define T_DBLFLT 14,432
+#define T_TSS 16,547
+#define T_SEGNP 17,602
+#define T_STACK 18,649
+#define T_GPFLT 19,692
+#define T_PGFLT 20,744
+#define T_FPERR 22,820
+#define T_ALIGN 23,868
+#define T_MCHK 24,910
+#define T_SIMDERR 25,951
+#define T_SYSCALL 29,1121
+#define T_DEFAULT 30,1160
+#define IRQ_OFFSET	32,1198
+#define IRQ_TIMER 35,1331
+#define IRQ_KBD 36,1358
+#define IRQ_SERIAL 37,1385
+#define IRQ_SPURIOUS 38,1412
+#define IRQ_IDE 39,1439
+#define IRQ_ERROR 40,1466
+struct PushRegs 46,1541
+	uint32_t reg_edi;48,1595
+	uint32_t reg_esi;49,1614
+	uint32_t reg_ebp;50,1633
+	uint32_t reg_oesp;51,1652
+	uint32_t reg_ebx;52,1687
+	uint32_t reg_edx;53,1706
+	uint32_t reg_ecx;54,1725
+	uint32_t reg_eax;55,1744
+struct Trapframe 58,1791
+	struct PushRegs tf_regs;59,1810
+	uint16_t tf_es;60,1836
+	uint16_t tf_padding1;61,1853
+	uint16_t tf_ds;62,1876
+	uint16_t tf_padding2;63,1893
+	uint32_t tf_trapno;64,1916
+	uint32_t tf_err;66,1979
+	uintptr_t tf_eip;67,1997
+	uint16_t tf_cs;68,2016
+	uint16_t tf_padding3;69,2033
+	uint32_t tf_eflags;70,2056
+	uintptr_t tf_esp;72,2149
+	uint16_t tf_ss;73,2168
+	uint16_t tf_padding4;74,2185
+
+inc/types.h,789
+#define JOS_INC_TYPES_H2,24
+#define NULL 5,62
+typedef _Bool bool;9,130
+enum { false,10,150
+enum { false, true 10,150
+typedef __signed char int8_t;13,219
+typedef unsigned char uint8_t;14,249
+typedef short int16_t;15,280
+typedef unsigned short uint16_t;16,303
+typedef int int32_t;17,336
+typedef unsigned int uint32_t;18,357
+typedef long long int64_t;19,388
+typedef unsigned long long uint64_t;20,415
+typedef int32_t intptr_t;26,673
+typedef uint32_t uintptr_t;27,699
+typedef uint32_t physaddr_t;28,727
+typedef uint32_t ppn_t;31,791
+typedef uint32_t size_t;34,859
+typedef int32_t ssize_t;37,975
+typedef int32_t off_t;40,1048
+#define MIN(43,1108
+#define MAX(49,1241
+#define ROUNDDOWN(58,1476
+#define ROUNDUP(64,1637
+#define ARRAY_SIZE(70,1778
+#define offsetof(73,1904
+
+inc/x86.h,540
+#define JOS_INC_X86_H2,22
+breakpoint(7,88
+inb(13,155
+insb(21,278
+inw(30,481
+insw(38,605
+inl(47,808
+insl(55,932
+outb(64,1131
+outsb(70,1241
+outw(79,1438
+outsw(85,1549
+outsl(94,1746
+outl(103,1943
+invlpg(109,2054
+lidt(115,2153
+lgdt(121,2231
+lldt(127,2309
+ltr(133,2392
+lcr0(139,2473
+rcr0(145,2566
+rcr2(153,2678
+lcr3(161,2786
+rcr3(167,2879
+lcr4(175,2987
+rcr4(181,3080
+tlbflush(189,3188
+read_eflags(197,3337
+write_eflags(205,3463
+read_ebp(211,3572
+read_esp(219,3688
+cpuid(227,3800
+read_tsc(244,4147
+xchg(252,4255
+
+inc/lp.h,26
+#define JOS_INC_LP_H2,22
+
+inc/np.h,26
+#define JOS_INC_NP_H2,22
+
+kern/console.c,1683
+delay(16,352
+#define COM1	26,448
+#define COM_RX	28,469
+#define COM_TX	29,518
+#define COM_DLL	30,569
+#define COM_DLM	31,623
+#define COM_IER	32,678
+#define   COM_IER_RDI	33,731
+#define COM_IIR	34,794
+#define COM_FCR	35,842
+#define COM_LCR	36,891
+#define	  COM_LCR_DLAB	37,940
+#define	  COM_LCR_WLEN8	38,998
+#define COM_MCR	39,1051
+#define	  COM_MCR_RTS	40,1101
+#define	  COM_MCR_DTR	41,1146
+#define	  COM_MCR_OUT2	42,1191
+#define COM_LSR	43,1238
+#define   COM_LSR_DATA	44,1285
+#define   COM_LSR_TXRDY	45,1333
+#define   COM_LSR_TSRE	46,1389
+static bool serial_exists;48,1439
+serial_proc_data(51,1478
+serial_intr(59,1592
+serial_putc(66,1678
+serial_init(79,1843
+lpt_putc(112,2633
+static unsigned addr_6845;128,2853
+static uint16_t *crt_buf;crt_buf129,2880
+static uint16_t crt_pos;130,2906
+cga_init(133,2944
+enum pcolor ccolor 160,3416
+cga_putc(163,3472
+#define NO	211,4376
+#define SHIFT	213,4391
+#define CTL	214,4413
+#define ALT	215,4433
+#define CAPSLOCK	217,4454
+#define NUMLOCK	218,4478
+#define SCROLLLOCK	219,4502
+#define E0ESC	221,4529
+static uint8_t shiftcode[shiftcode223,4552
+static uint8_t togglecode[togglecode233,4683
+static uint8_t normalmap[normalmap240,4782
+static uint8_t shiftmap[shiftmap261,5667
+#define C(282,6551
+static uint8_t ctlmap[ctlmap284,6575
+static uint8_t *charcode[charcode301,7304
+kbd_proc_data(313,7501
+kbd_intr(365,8487
+kbd_init(371,8546
+#define CONSBUFSIZE 382,8786
+	uint8_t buf[buf385,8827
+	uint32_t rpos;386,8854
+	uint32_t wpos;387,8870
+} cons;388,8886
+cons_intr(393,9014
+cons_getc(408,9277
+cons_putc(430,9731
+cons_init(439,9837
+cputchar(453,10033
+getchar(459,10073
+iscons(469,10168
+
+kern/console.h,200
+#define _CONSOLE_H_4,68
+#define MONO_BASE	11,215
+#define MONO_BUF	12,239
+#define CGA_BASE	13,264
+#define CGA_BUF	14,287
+#define CRT_ROWS	16,313
+#define CRT_COLS	17,333
+#define CRT_SIZE	18,353
+
+kern/entry.S,239
+.align 32,954
+.long 33,963
+.long 34,992
+.long 35,1021
+.globl	40,1238
+_start 41,1253
+.globl 43,1276
+entry:entry44,1289
+relocated:relocated70,2191
+spin:spin84,2523
+bootstack:bootstack93,2756
+bootstacktop:bootstacktop96,2810
+
+kern/entrypgdir.c,121
+pte_t entry_pgtable[entry_pgtable4,49
+pde_t entry_pgdir[entry_pgdir21,934
+pte_t entry_pgtable[entry_pgtable33,1329
+
+kern/env.c,471
+struct Env *envs envs15,278
+struct Env *curenv curenv16,324
+static struct Env *env_free_list;env_free_list17,371
+#define ENVGENSHIFT	20,465
+struct Segdesc gdt[gdt37,1167
+struct Pseudodesc gdt_pd 58,1683
+envid2env(73,2093
+env_init(115,3360
+env_init_percpu(133,3708
+env_setup_vm(163,4834
+env_alloc(209,6328
+region_alloc(271,8355
+load_icode(320,10160
+env_create(389,12736
+env_free(404,13016
+env_destroy(457,14266
+env_pop_tf(474,14607
+env_run(494,15045
+
+kern/env.h,127
+#define JOS_KERN_ENV_H4,71
+void	env_run(21,609
+void	env_pop_tf(22,664
+#define ENV_PASTE3(26,866
+#define ENV_CREATE(28,907
+
+kern/init.c,88
+i386_init(16,272
+const char *panicstr;panicstr64,1590
+_panic(71,1738
+_warn(96,2171
+
+kern/kclock.c,45
+mc146818_read(11,169
+mc146818_write(18,250
+
+kern/kclock.h,288
+#define JOS_KERN_KCLOCK_H4,74
+#define	IO_RTC	9,203
+#define	MC_NVRAM_START	11,242
+#define	MC_NVRAM_SIZE	12,301
+#define NVRAM_BASELO	15,393
+#define NVRAM_BASEHI	16,465
+#define NVRAM_EXTLO	19,609
+#define NVRAM_EXTHI	20,680
+#define NVRAM_EXT16LO	23,826
+#define NVRAM_EXT16HI	24,900
+
+kern/kdebug.c,244
+struct UserStabData 15,434
+	const struct Stab *stabs;stabs16,456
+	const struct Stab *stab_end;stab_end17,483
+	const char *stabstr;stabstr18,513
+	const char *stabstr_end;stabstr_end19,535
+stab_binsearch(60,1929
+debuginfo_eip(114,3197
+
+kern/kdebug.h,246
+#define JOS_KERN_KDEBUG_H2,26
+struct Eipdebuginfo 7,137
+	const char *eip_file;eip_file8,159
+	int eip_line;9,215
+	const char *eip_fn_name;eip_fn_name11,267
+	int eip_fn_namelen;13,366
+	uintptr_t eip_fn_addr;14,415
+	int eip_fn_narg;15,472
+
+kern/monitor.c,503
+#define CMDBUF_SIZE	17,361
+print_pfields(20,422
+struct Command 34,796
+	const char *name;name35,813
+	const char *desc;desc36,832
+	int (*func)func38,890
+static struct Command commands[commands41,953
+mon_quit(54,1528
+mon_help(60,1603
+mon_kerninfo(70,1790
+mon_backtrace(86,2411
+extract_hex_addr(113,3146
+print_pagetable_entry(130,3575
+mon_vaddrinfo(143,3813
+mon_pgdir(182,4945
+mon_vminfo(257,7288
+#define WHITESPACE 311,8634
+#define MAXARGS 312,8663
+runcmd(315,8694
+monitor(354,9486
+
+kern/monitor.h,32
+#define JOS_KERN_MONITOR_H2,27
+
+kern/pmap.c,849
+size_t npages;15,285
+static size_t npages_basemem;16,342
+pde_t *kern_pgdir;kern_pgdir19,450
+struct PageInfo *pages;pages20,505
+static struct PageInfo *page_free_list;page_free_list21,559
+nvram_read(29,819
+i386_detect_memory(35,910
+static char *nextfree;nextfree87,2717
+boot_alloc(89,2801
+mem_init(127,3959
+page_init(261,9378
+page_alloc(311,11128
+page_free(330,11479
+page_decref(345,11809
+pgdir_walk(374,12945
+boot_map_region(406,13900
+page_insert(444,15238
+page_lookup(479,16105
+page_remove(508,16921
+tlb_invalidate(525,17265
+static uintptr_t user_mem_check_addr;532,17461
+user_mem_check(553,18291
+user_mem_assert(576,19013
+test_boot_alloc(591,19455
+check_page_free_list(603,19772
+check_page_alloc(665,21533
+check_kern_pgdir(747,23350
+check_va2pa(800,24806
+check_page(816,25087
+check_page_installed_pgdir(969,29909
+
+kern/pmap.h,178
+#define JOS_KERN_PMAP_H4,72
+#define PADDR(26,657
+_paddr(29,734
+#define KADDR(38,1069
+_kaddr(41,1139
+	ALLOC_ZERO 51,1378
+page2pa(70,1980
+pa2page(76,2078
+page2kva(84,2222
+
+kern/printf.c,47
+putch(10,212
+vcprintf(17,269
+cprintf(26,385
+
+kern/syscall.c,131
+sys_cputs(18,409
+sys_cgetc(31,824
+sys_getenvid(38,925
+sys_env_destroy(49,1235
+sys_np(65,1535
+sys_lp(80,1778
+syscall(94,2095
+
+kern/syscall.h,32
+#define JOS_KERN_SYSCALL_H2,27
+
+kern/trap.c,355
+static struct Taskstate ts;12,214
+static struct Trapframe *last_tf;last_tf18,434
+struct Gatedesc idt[idt23,615
+struct Pseudodesc idt_pd 24,653
+static const char *trapname(trapname30,749
+trap_init(64,1423
+trap_init_percpu(101,2727
+print_trapframe(123,3251
+print_regs(156,4427
+trap_dispatch(169,4831
+trap(202,5597
+page_fault_handler(241,6658
+
+kern/trap.h,29
+#define JOS_KERN_TRAP_H4,72
+
+kern/trapentry.S,29
+_alltraps:_alltraps82,2504
+
+lib/console.c,31
+cputchar(6,52
+getchar(16,214
+
+lib/entry.S,67
+.globl 20,484
+_start:_start21,498
+args_exist:args_exist32,779
+
+lib/exit.c,11
+exit(5,28
+
+lib/libmain.c,107
+const volatile struct Env *thisenv;thisenv8,176
+const char *binaryname binaryname9,212
+libmain(12,256
+
+lib/panic.c,15
+_panic(10,206
+
+lib/printf.c,128
+struct printbuf 19,664
+	int idx;20,682
+	int cnt;21,716
+	char buf[buf22,756
+putch(27,789
+vcprintf(38,937
+cprintf(51,1110
+
+lib/printfmt.c,381
+static const char * const error_string[error_string21,589
+printnum(36,995
+getuint(55,1609
+getint(68,1897
+int decode_uint_prefix(84,2270
+static enum pcolor decode_color(98,2538
+vprintfmt(130,3046
+printfmt(304,6318
+struct sprintbuf 313,6478
+	char *buf;buf314,6497
+	char *ebuf;ebuf315,6509
+	int cnt;316,6522
+sprintputch(320,6548
+vsnprintf(328,6650
+snprintf(345,6948
+
+lib/readline.c,63
+#define BUFLEN 4,47
+static char buf[buf5,67
+readline(8,100
+
+lib/string.c,341
+#define ASM 9,264
+strlen(12,283
+strnlen(22,371
+strcpy(32,496
+strcat(43,636
+strncpy(51,745
+strlcpy(66,998
+strcmp(80,1201
+strncmp(88,1340
+strchr(101,1645
+strfind(112,1889
+prefix_find(123,2113
+memset(134,2271
+memmove(154,2628
+memset(186,3368
+memmove(200,3490
+memcpy(221,3739
+memcmp(227,3823
+memfind(242,4070
+strtol(252,4270
+
+lib/syscall.c,98
+syscall(7,92
+sys_cputs(41,922
+sys_cgetc(47,1019
+sys_env_destroy(53,1090
+sys_getenvid(59,1190
+
+lib/np.c,28
+int syscall(4,49
+np(7,111
+
+lib/lp.c,28
+int syscall(4,49
+lp(7,111
+
+user/badsegment.c,12
+umain(6,79
+
+user/breakpoint.c,12
+umain(6,66
+
+user/buggyhello.c,13
+umain(7,140
+
+user/buggyhello2.c,44
+const char *hello hello6,150
+umain(9,194
+
+user/divzero.c,27
+int zero;5,76
+umain(8,92
+
+user/evilhello.c,13
+umain(7,137
+
+user/faultread.c,12
+umain(6,85
+
+user/faultreadkernel.c,12
+umain(6,84
+
+user/faultwrite.c,12
+umain(6,84
+
+user/faultwritekernel.c,12
+umain(6,88
+
+user/hello.c,12
+umain(5,43
+
+user/sendpage.c,129
+const char *str1 str16,128
+const char *str2 str27,188
+#define TEMP_ADDR	9,247
+#define TEMP_ADDR_CHILD	10,283
+umain(13,331
+
+user/softint.c,12
+umain(6,84
+
+user/testbss.c,71
+#define ARRAYSIZE 5,63
+uint32_t bigarray[bigarray7,94
+umain(10,130
